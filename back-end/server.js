@@ -9,6 +9,8 @@ import validator from "validator";
 
 /* Código */
 
+const port = process.env.PORT || 3333;
+
 const prisma = new PrismaClient();
 
 const app = express();
@@ -244,4 +246,4 @@ app.delete("/users/:id", checkIsAdm, async (req, res) => {
   res.status(204).json({ message: "Usuário deletado com sucesso!" });
 });
 
-app.listen(3333);
+app.listen(port);
