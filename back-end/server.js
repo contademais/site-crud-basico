@@ -3,7 +3,7 @@
 import express from "express";
 import cors from "cors";
 import { PrismaClient } from "./generated/prisma/default.js";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import validator from "validator";
 
@@ -42,8 +42,8 @@ app.post("/register", async (req, res) => {
     return res.status(422).json({ message: "E-mail inválido!" });
   }
 
-  const salt = await bcrypt.genSalt(12);
-  const passwordHash = await bcrypt.hash(req.body.password, salt);
+  const salt = await bcryptjs.genSalt(12);
+  const passwordHash = await bcryptjs.hash(req.body.password, salt);
 
   try {
     await prisma.user.create({
@@ -76,7 +76,7 @@ app.post("/login", async (req, res) => {
     return res.status(404).json({ message: "Usuário não encontrado!" });
   }
 
-  const isPasswordValid = await bcrypt.compare(
+  const isPasswordValid = await bcryptjs.compare(
     req.body.password,
     user.password
   );
