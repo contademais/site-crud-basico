@@ -21,7 +21,7 @@ app.use(cors());
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "Bem-vindo ao back-end!" });
-})
+});
 
 app.post("/register", async (req, res) => {
   if (
@@ -126,7 +126,7 @@ app.get("/users/todos", checkToken, async (req, res) => {
   res.status(200).json(users);
 });
 
-app.get("/users/:id", checkToken, async (req, res) => {
+app.get("/users/:email", checkToken, async (req, res) => {
   let user = [];
   if (req.query) {
     try {
@@ -135,17 +135,16 @@ app.get("/users/:id", checkToken, async (req, res) => {
           password: true,
         },
         where: {
-          id: req.params.id,
+          email: req.params.email,
         },
       });
+      user !== null ? res.status(200).json(user) : print(user.name);
     } catch (e) {
-      res.status(404).json({ error: "Usuário não encontrado" });
+      res.status(404).json({ message: "Usuário não encontrado" });
     }
   } else {
     res.status(422).json({ message: "Não encontrado" });
   }
-
-  res.status(200).json(user);
 });
 
 async function checkToken(req, res, next) {
@@ -193,7 +192,6 @@ app.post("/users/autenticar", async (req, res) => {
     const authHeader = req.headers["authorization"];
     const token = authHeader && authHeader.split(" ")[1];
     const secret = process.env.JWT_SECRET;
-    console.log(authHeader);
     jwt.verify(token, secret);
 
     res.status(200).json({ message: "Usuário autenticado com sucesso!" });

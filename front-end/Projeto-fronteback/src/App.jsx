@@ -5,11 +5,11 @@ import { useState, useRef } from "react";
 
 function App() {
   const [user, setUser] = useState({});
-  const idInput = useRef();
+  const EmailInput = useRef();
 
   async function getUser() {
     await api
-      .get(`/users/${idInput.current.value}`, {
+      .get(`/users/${EmailInput.current.value}`, {
         headers: { authorization: "Bearer " + localStorage.getItem("token") },
       })
       .then((res) => {
@@ -30,8 +30,8 @@ function App() {
         <div className="flex flex-col gap-5">
           <input
             type="text"
-            placeholder="Insira o ID"
-            ref={idInput}
+            placeholder="Insira o Email do Usuário"
+            ref={EmailInput}
             className="bg-slate-200 border-slate-300 outline-slate-400 px-4 py-2 rounded-md"
           />
           <button
