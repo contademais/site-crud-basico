@@ -6,8 +6,11 @@ import { PrismaClient } from "./generated/prisma/default.js";
 import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import validator from "validator";
+import dotenv from "dotenv";
 
 /* Código */
+
+dotenv.config();
 
 const port = process.env.PORT || 3333;
 
