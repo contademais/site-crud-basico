@@ -19,6 +19,10 @@ app.use(cors());
 
 // Register
 
+app.get("/", (req, res) => {
+  res.status(200).json({ message: "Bem-vindo ao back-end!" });
+})
+
 app.post("/register", async (req, res) => {
   if (
     req.body.name.trim() == "" ||
@@ -246,4 +250,6 @@ app.delete("/users/:id", checkIsAdm, async (req, res) => {
   res.status(204).json({ message: "Usuário deletado com sucesso!" });
 });
 
-app.listen(port);
+app.listen(port, () => {
+  console.log(`Servidor rodando na porta ${port}`);
+});
